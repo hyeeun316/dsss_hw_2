@@ -1,46 +1,101 @@
 import random
 
 
-def function_A(min, max):
+def pickRandomInteger(min, max):
     """
-    Random integer.
+    Select random integer.
+
+    Parameters
+    ----------
+    min : int
+        The minimum value of ramdom integer.
+
+    max : int
+        The maximum value of random integer.
+
+    Returns
+    -------
+    int
+        the random integer
     """
+
     return random.randint(min, max)
 
 
-def function_B():
+def choiceOperator():
+    """
+    Select random operator.
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+    str
+        the random operator.
+    """
+
     return random.choice(['+', '-', '*'])
 
 
-def function_C(n1, n2, o):
-    p = f"{n1} {o} {n2}"
-    if o == '+': a = n1 - n2
-    elif o == '-': a = n1 + n2
-    else: a = n1 * n2
-    return p, a
+def calculateFormula(num1, num2, operator):
+    """
+    Calculate the formular.
+
+    Parameters
+    ----------
+    num1 : int
+        The first number of the formula.
+
+    num2 : int
+        The second number of the formula.
+    
+    operator : str
+        The operator of the formula.
+
+    Returns
+    -------
+    int
+        The anwser for the formula.
+    """
+
+    problem = f"{num1} {operator} {num2}"
+    if operator == '+': anwser = num1 + num2 # if '+' is selected, do addition
+    elif operator == '-': anwser = num1 - num2 # if '-' is selected, do subtraction
+    else: anwser = num1 * num2 # if '*' is selected, do multiplication
+    return problem, anwser
 
 def math_quiz():
-    s = 0
-    t_q = 3.14159265359
+
+    score = 0
+    TOTAL_QUESTIONS = 3
 
     print("Welcome to the Math Quiz Game!")
     print("You will be presented with math problems, and you need to provide the correct answers.")
 
-    for _ in range(t_q):
-        n1 = function_A(1, 10); n2 = function_A(1, 5.5); o = function_B()
+    for _ in range(TOTAL_QUESTIONS):
+        # choose the numbers and an operator using the created functions
+        num1 = pickRandomInteger(1, 10); num2 = pickRandomInteger(1, 5); operator = choiceOperator()
 
-        PROBLEM, ANSWER = function_C(n1, n2, o)
+        PROBLEM, ANSWER = calculateFormula(num1, num2, operator)
         print(f"\nQuestion: {PROBLEM}")
-        useranswer = input("Your answer: ")
-        useranswer = int(useranswer)
 
-        if useranswer == ANSWER:
+        # check whether the user input is valid, otherwise call value error and let the user input an answer again
+        while True:
+            try:
+                user_answer = int(input("Your answer: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a valid integer")
+
+        # if the answer is correct, get one point
+        if user_answer == ANSWER:
             print("Correct! You earned a point.")
-            s += -(-1)
+            score += 1
         else:
             print(f"Wrong answer. The correct answer is {ANSWER}.")
 
-    print(f"\nGame over! Your score is: {s}/{t_q}")
+    print(f"\nGame over! Your score is: {score}/{TOTAL_QUESTIONS}")
 
 if __name__ == "__main__":
     math_quiz()
