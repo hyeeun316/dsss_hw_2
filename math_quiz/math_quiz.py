@@ -1,6 +1,5 @@
 import random
 
-
 def pickRandomInteger(min, max):
     """
     Select random integer.
